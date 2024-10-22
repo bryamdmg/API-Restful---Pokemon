@@ -1,7 +1,19 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
 require('dotenv').config();
 
-const Server = require('./models/server')
+app.use(express.json());
 
-const servidor = new Server();
+const mongoDBURI = 'mongodb://localhost:27017/pokemonDB';
+mongoose.connect(mongoDBURI, {})
+    .then(() => console.log('Conectado a MongoDB'))
+    .catch(err => console.error('Error al conectar a MongoDB:', err));
 
-servidor.listen();
+
+app.use('/api/pokemons', require('./routes/pokemons'));
+app.use('/api/auth', require('./routes/auth'));
+
+app.listen(3033, () => {
+    console.log('Servidor ejecutándose en http://localhost:3033');
+});

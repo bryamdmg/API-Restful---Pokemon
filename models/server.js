@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 
 class Server{
 
@@ -17,6 +18,7 @@ class Server{
 
     routes(){
         this.app.use('/api/pokemons', require('../routes/pokemons'));
+        this.app.use('/api/auth', require('./routes/auth'));
     }
 
     listen(){
